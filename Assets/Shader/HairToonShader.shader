@@ -368,7 +368,7 @@
                 float3 hairTempTangent = float3(0, 0, 1);
                 float3 hairTempBiTangent = HNormalWS.zxy * hairTempTangent.yzx - HNormalWS * hairTempTangent;
                 float3 hairBiTangent = lerp(hairTempBiTangent, i.tangentWS.yzx, 1-ormTex.x);
-                float3 hariBinormal = HNormalWS.yzx * hairBiTangent.yzx - hairBiTangent * HNormalWS.zxy;
+                float3 hariBinormal = HNormalWS.yzx * hairBiTangent.zxy - HNormalWS.zxy * hairBiTangent.yzx;
 
                 // 发丝切线方向
                 float3 fakeTangent = normalize(cross(float3(0,1,0), flatHNormal));
@@ -384,7 +384,7 @@
                 float ToH_lut = dot(hairHalfDir, hairBiNormal_lut);
                 float lutUV_u = 1 - ToH_lut * ToH_lut;
                 lutUV_u = max(0.0001, sqrt(lutUV_u));
-                lutUV_u = 200 * log2(lutUV_u);
+                lutUV_u = _SpecularPowStrength * log2(lutUV_u);
                 lutUV_u = saturate(exp2(lutUV_u) * reflectivity);
 
                // LUT V轴计算（注意源码用的是viewDir不是hairViewDir）
@@ -403,7 +403,7 @@
                 float3 lutF0 = SpecularRefineF0Tex_var.xyz * F0;
 
                 // 背光高光光晕
-                float3 backF0 = _SpecularBackF0.rgb * ormTex.w * pow(sqrt(max(0, 1 - ToH_lut * ToH_lut)), trunc(200 * _SpecularBackF0_ToHPowStrength));
+                float3 backF0 = _SpecularBackF0.rgb * ormTex.w * pow(sqrt(max(0, 1 - ToH_lut * ToH_lut)), _SpecularPowStrength * _SpecularBackF0_ToHPowStrength);
 
                 float3 finalF0 = lutF0 * 7 + backF0;
 

@@ -113,7 +113,7 @@ Material:
     - _AlphaToMask: 0
     - _AoStrength: 1
     - _BaseColorPow: 1
-    - _BiNormalOffset_specularLut: 0.62
+    - _BiNormalOffset_specularLut: -0.3
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -130,13 +130,13 @@ Material:
     - _EnvLightStrength: 0.2
     - _EnvRotation: 0
     - _EnvironmentReflections: 1
-    - _ForwardDirStrength: 0
+    - _ForwardDirStrength: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
     - _IsNeedNormalMap: 1
     - _IsNeedOrmTex: 1
-    - _LutVPowStrength: 5
+    - _LutVPowStrength: 3.19
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
@@ -154,16 +154,16 @@ Material:
     - _RimLightDiffuseColorEffect: 0.6
     - _RimLightNoLxzStrength: 0.7
     - _RimLightStrength: 0.7
-    - _SelfAoShadowStrength: 0.781
+    - _SelfAoShadowStrength: 0.37
     - _ShadowCenter: 0.5
     - _ShadowOffset: 0.89
     - _ShadowSmoothness: 0.02
     - _ShadowStrength: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
-    - _SpecularBackF0_ToHPowStrength: 0.963
+    - _SpecularBackF0_ToHPowStrength: 1
     - _SpecularHighlights: 1
-    - _SpecularPowStrength: 61.8
+    - _SpecularPowStrength: 18
     - _SpecularStrength: 2
     - _SpecularTrick_Flatten: 1
     - _SpecularWidePow: 12
@@ -171,7 +171,7 @@ Material:
     - _SrcBlendAlpha: 1
     - _Surface: 0
     - _UVSec: 0
-    - _ViewDirYOffset: -0.61
+    - _ViewDirYOffset: -0.3
     - _WorkflowMode: 1
     - _XRMotionVectorsPass: 1
     - _ZBias: 0.01
