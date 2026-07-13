@@ -1,6 +1,6 @@
-﻿Shader "Custom/HairToonShader"
+Shader "Custom/HairToonShader"
 {
-   Properties
+    Properties
     {
         _MainTex("Main Tex",2D)="white"{}
         _OrmTex("Orm Tex",2D)="white"{}
@@ -38,19 +38,18 @@
         _SpecularStrength("高光强度",Range(0,2)) = 1.0
         _DiffuseBlendEffect("SSS漫反射衰减",Range(0,1)) = 0.6
 
-
         _RimLightArea("轮廓光宽度", Range(0, 1)) = 0.3
         _RimLightColor("轮廓光颜色", Color) = (1,1,1,1)
         _RimLightStrength("轮廓光强度", Range(0,3)) = 0.8
         _RimLightDiffuseColorEffect("固有色融合强度", Range(0,1)) = 0.6
         _RimLightNoLxzStrength("主光侧勾边强度", Range(0, 2)) = 0.7
 
-        // 平滑法向相关
+        // Smooth normal
         _FaceCenter("面部中心点", Vector) = (0,0,0,0)
         _SpecularTrick_Flatten("高光法向压平", Range(0,1)) = 0.5
-       _ViewDirYOffset("ViewDir Y偏移", Range(-2, 2)) = 0
+        _ViewDirYOffset("ViewDir Y偏移", Range(-2, 2)) = 0
 
-        // Kajiya-Kay高光
+        // Kajiya-Kay specular
         _HairSpecularTex("头发高光颜色LUT", 2D) = "white" {}
         _SpecularPowStrength("高光锐度", Range(1,100)) = 20
         _LutVPowStrength("LUT V轴幂次", Range(0.1,5)) = 1
@@ -70,383 +69,157 @@
     {
         Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
 
-        HLSLINCLUDE
-
-        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Core.hlsl"
-        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
-        #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
-
-        CBUFFER_START(UnityPerMaterial)    
-
-        float _IsNeedOrmTex;
-        float _BumpScale;
-        float _IsNeedNormalMap;
-
-        float _ForwardDirStrength;
-
-        float _DayStrength;
-        float _OtherLightResultStrength_day1;
-        float _OtherLightResultStrength_day0;
-
-        float _ShadowCenter;
-        float _ShadowSmoothness;
-        float _ShadowOffset;
-        float _ShadowStrength;
-        
-
-        float3 _BaseColor;
-        float _BaseColorPow;
-        float _AlbedoDarkStrength;
-        float _AlbedoDarkSaturation;     
-        float _OtherLightOffset;
-        float _OtherLightStrength;
-        float _OtherLightStrength_Offset;
-        float4 _OtherLightColor;
-        float _AoStrength;
-
-        float _SpecularStrength;
-        float _DiffuseBlendEffect;
-
-
-        float _EnvRotation;
-        float3 _EnvColor;
-        float _EnvLightStrength;
-
-        float _RimLightArea;
-        float3 _RimLightColor;
-        float _RimLightStrength;
-        float _RimLightDiffuseColorEffect;
-
-        float _RimLightNoLxzStrength;
-
-        float4 _FaceCenter;
-        float _SpecularTrick_Flatten;
-        float _ViewDirYOffset;
-        float _SpecularPowStrength;
-        float _LutVPowStrength;
-        float4 _SpecularBackF0;
-        float _SpecularBackF0_ToHPowStrength;
-        float _SelfAoShadowStrength;
-        float _BiNormalOffset_specularLut;
-
-        float _OutlineWidth;
-        float _ZBias;
-        float4 _OutlineColor;
-        float _OutLineStrength;
-        float _ZMinRefine;
-        CBUFFER_END
-
-        ENDHLSL
-
         Pass
         {
             HLSLPROGRAM
-            
-            #pragma vertex vert
+            #pragma vertex ZmdVert
             #pragma fragment frag
             #pragma multi_compile _ SCREEN_SPACE_SHADOWS
 
-            TEXTURE2D(_MainTex);
-            SAMPLER(sampler_MainTex);
+            #include "ZmdToonCore.hlsl"
+            #include "ZmdToonLighting.hlsl"
+            #include "ZmdToonSpecular.hlsl"
 
-            TEXTURE2D(_OrmTex);
-            SAMPLER(sampler_OrmTex);
+            CBUFFER_START(UnityPerMaterial)
+                float _IsNeedOrmTex, _BumpScale, _IsNeedNormalMap, _ForwardDirStrength;
+                float _DayStrength, _OtherLightResultStrength_day1, _OtherLightResultStrength_day0;
+                float _ShadowCenter, _ShadowSmoothness, _ShadowOffset, _ShadowStrength;
+                float3 _BaseColor; float _BaseColorPow, _AlbedoDarkStrength, _AlbedoDarkSaturation;
+                float _OtherLightOffset, _OtherLightStrength, _OtherLightStrength_Offset;
+                float4 _OtherLightColor; float _AoStrength;
+                float _SpecularStrength, _DiffuseBlendEffect;
+                float _RimLightArea; float3 _RimLightColor; float _RimLightStrength;
+                float _RimLightDiffuseColorEffect, _RimLightNoLxzStrength;
+                float4 _FaceCenter; float _SpecularTrick_Flatten, _ViewDirYOffset;
+                float _SpecularPowStrength, _LutVPowStrength;
+                float4 _SpecularBackF0; float _SpecularBackF0_ToHPowStrength;
+                float _SelfAoShadowStrength, _BiNormalOffset_specularLut;
+                float _OutlineWidth, _ZBias; float4 _OutlineColor;
+                float _OutLineStrength, _ZMinRefine;
+            CBUFFER_END
 
-            TEXTURE2D(_NormalTex);
-            SAMPLER(sampler_NormalTex);
+            TEXTURE2D(_MainTex);          SAMPLER(sampler_MainTex);
+            TEXTURE2D(_OrmTex);           SAMPLER(sampler_OrmTex);
+            TEXTURE2D(_NormalTex);        SAMPLER(sampler_NormalTex);
+            TEXTURE2D(_RampTex);          SAMPLER(sampler_RampTex);
+            TEXTURE2D(_HairSpecularTex);  SAMPLER(sampler_HairSpecularTex);
 
-            TEXTURE2D(_RampTex);
-            SAMPLER(sampler_RampTex);
-
-            TEXTURECUBE(_EnvMap);
-            SAMPLER(sampler_EnvMap);
-
-            TEXTURE2D(_HairSpecularTex);
-            SAMPLER(sampler_HairSpecularTex);
-
-
-            // 自定义Sigmoid硬阴影函数
-            float SigmoidSharp(float x, float center, float smoothness)
+            half4 frag(Varyings i, bool isFrontFace : SV_IsFrontFace) : SV_Target
             {
-                float t = (x - center) / max(smoothness, 1e-6);
-                return 1.0 / (1.0 + exp(-t));
-            }
+                float4 mainTex   = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv0);
+                float4 ormTex    = SAMPLE_TEXTURE2D(_OrmTex, sampler_OrmTex, i.uv0);
+                float4 normalTex = SAMPLE_TEXTURE2D(_NormalTex, sampler_NormalTex, i.uv0);
+                ormTex = lerp(float4(0,1,0,0), ormTex, _IsNeedOrmTex);
 
-            struct Attributes
-            {
-                float4 positionOS : POSITION;
-                float2 uv0 : TEXCOORD0;
-                float3 normalOS  : NORMAL;
-                float4 tangentOS : TANGENT;
-            };
+                // ── Normal ──
+                float3x3 TBN = float3x3(i.tangentWS, i.bitangentWS, i.normalWS);
+                float3 nTS   = UnpackNormalScale(normalTex, _BumpScale);
+                float3 N     = lerp(i.normalWS, normalize(mul(nTS, TBN)), _IsNeedNormalMap);
 
-            struct Varyings
-            {
-                float4 positionHCS : SV_POSITION;
-                float2 uv0 : TEXCOORD0;
-                float3 positionWS   : TEXCOORD1;
-                float3 normalWS     : TEXCOORD2;
-                float3 tangentWS:TEXCOORD3;
-                float3 bitangentWS:TEXCOORD4;
-                float4 shadowCoord : TEXCOORD5;
-            };
+                // Smooth normal (ZW channels of normal tex)
+                float3 nTS_H  = UnpackNormalScale(float4(normalTex.zw, normalTex.zw), _BumpScale);
+                float3 HN     = lerp(i.normalWS, normalize(mul(nTS_H, TBN)), _IsNeedNormalMap);
+                float3 sphereN= normalize(i.positionWS.xyz - _FaceCenter.xyz);
+                HN = lerp(sphereN, HN, 1.0 - ormTex.x);
 
+                float facing = isFrontFace ? 1.0 : -1.0;
+                N = N * facing;
 
-            Varyings vert(Attributes IN)
-            {
-                Varyings OUT;
-                OUT.positionHCS = TransformObjectToHClip(IN.positionOS.xyz);
-                OUT.positionWS = TransformObjectToWorld(IN.positionOS.xyz);
-                OUT.uv0 = IN.uv0;
+                // ── View dir ──
+                float3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.positionWS.xyz);
+                float3 hairVD  = normalize(viewDir + float3(0, _ViewDirYOffset * (1.0 - ormTex.x), 0));
+                float3 camFwd  = normalize(UNITY_MATRIX_V[2].xyz);
+                viewDir = normalize(lerp(viewDir, camFwd, _ForwardDirStrength));
 
-                VertexNormalInputs normalInput = GetVertexNormalInputs(IN.normalOS, IN.tangentOS);
-                OUT.normalWS = normalInput.normalWS;
-                OUT.tangentWS = normalInput.tangentWS;
-                OUT.bitangentWS = normalInput.bitangentWS;
-                OUT.shadowCoord =TransformWorldToShadowCoord(OUT.positionWS);
+                // ── Main light ──
+                float3 L, Lxz, lightCol; float lightIntensity, NoL;
+                ZmdGetMainLight(i, L, Lxz, lightCol, lightIntensity, NoL);
 
-                return OUT;
-            }
+                float3 otherLight = ZmdGetOtherLight(N);
+                float3 lightFinal = ZmdGetMainLightColorFinal(lightCol, otherLight);
+                float  shadow     = ZmdGetShadow(i, GetMainLight(i.shadowCoord).shadowAttenuation);
 
-            half4 frag(Varyings i,bool isFrontFace : SV_IsFrontFace) : SV_Target
-            {
-                // 基础贴图资源获取
-                float4 mainTex = SAMPLE_TEXTURE2D(_MainTex, sampler_MainTex, i.uv0);  
-                float4 ormTex = SAMPLE_TEXTURE2D(_OrmTex, sampler_OrmTex, i.uv0);  
-                float4 normalTex= SAMPLE_TEXTURE2D(_NormalTex, sampler_NormalTex, i.uv0);  
-                ormTex = lerp(float4(0,1,0,0),ormTex,_IsNeedOrmTex);// ORM开关默认值 AO=0, Rough=1, Metal=0
+                // ── Material props ──
+                float rough  = 1.0 - ormTex.w;
+                float rough2 = max(rough * rough, 0.0078);
+                float metallic = ormTex.r, reflec = ormTex.g;
+                float ao = pow(ormTex.b, _AoStrength);
 
-                // 光源属性获取
-                Light mainLight = GetMainLight(i.shadowCoord);
-                float3 mainLightDir = mainLight.direction;
-                // 获取xz平面光源dir  
-                float3 mainLightDir_xz = normalize(float3(mainLightDir.x, 6.10351562e-05, mainLightDir.z));
+                float3 baseCol = mainTex.xyz * _BaseColor.xyz;
+                baseCol = pow(baseCol, _BaseColorPow);
+                float3 darkCol = baseCol * _AlbedoDarkStrength;
+                float  darkLum = Luminance(darkCol);
+                darkCol = lerp(darkLum.xxx, darkCol, _AlbedoDarkSaturation);
 
-                // normal处理 
-                float3x3 tangentTransform = float3x3( i.tangentWS, i.bitangentWS, i.normalWS); // TBN矩阵  
-                float3 normalTex_processed = UnpackNormalScale(normalTex, _BumpScale);  
-                float3 normalWS = lerp( i.normalWS ,normalize(mul(normalTex_processed, tangentTransform)), _IsNeedNormalMap);
+                float energyDist = 0.96 - 0.96 * metallic;
+                float3 F0 = 0.04 * reflec.xxx + metallic * (baseCol - reflec.xxx * 0.04);
 
-                // 法线贴图zw通道获取平滑法向
-                float3 normalTex_Hprocessed = UnpackNormalScale(float4(normalTex.zw, normalTex.zw), _BumpScale);
-                float3 HNormalWS = lerp(i.normalWS, normalize(mul(normalTex_Hprocessed, tangentTransform)), _IsNeedNormalMap);
+                // ── Ramp + Diffuse ──
+                float  back     = ZmdGetBackLight(camFwd, Lxz);
+                float  rampNoL  = ZmdGetRampNoL(NoL, back);
+                float4 rampCol  = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, float2(rampNoL, 0.5));
+                float  rampNoF  = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, float2(dot(N, camFwd) * 0.5 + 0.5, 0.5)).w;
 
-                // 球体法向平滑替代方案
-                 float3 sphereNormal = normalize(i.positionWS.xyz - _FaceCenter.xyz);
-                 HNormalWS = lerp(sphereNormal, HNormalWS, 1-ormTex.x);
+                float3 diffLight, diffDark;
+                float3 diffuse = ZmdGetDiffuseBRDF(baseCol, darkCol, metallic, ao, shadow, rampCol, rampNoF, energyDist, diffLight, diffDark);
+                float3 diffRamp = ZmdApplyRampColor(diffuse, rampCol);
 
+                float  aoShaNoF  = ao * shadow * rampNoF;
+                float  minShadow = min(min(ao, shadow), rampCol.w);
+                float3 diffLow   = lerp(diffDark * 0.65, diffLight, aoShaNoF);
+                diffRamp = lerp(diffLow, diffRamp, _DayStrength);
+                float3 diffResult = lightFinal * diffRamp;
 
-                // 面朝向  
-                float facing = isFrontFace ? 1.0 : -1.0;  
-                normalWS = normalWS * facing;
+                // ── Kajiya-Kay Specular ──
+                float3 worldUp     = float3(0,1,0);
+                float3 camRight    = normalize(cross(worldUp, camFwd) + float3(1e-6,0,0));
+                float  dotRight    = dot(HN, camRight);
+                float3 cylN        = normalize(HN - dotRight * camRight);
+                float3 flatHN      = normalize(lerp(HN, cylN, _SpecularTrick_Flatten));
 
-                // view dir
-                float3 viewDir = normalize(_WorldSpaceCameraPos.xyz-i.positionWS.xyz);
+                // Hair tangent / binormal
+                float3 tmpTan     = float3(0,0,1);
+                float3 tmpBTan    = HN.zxy * tmpTan.yzx - HN * tmpTan;
+                float3 hairBTan   = lerp(tmpBTan, i.tangentWS.yzx, 1.0 - ormTex.x);
+                float3 hariBin    = HN.yzx * hairBTan.zxy - HN.zxy * hairBTan.yzx;
+                float3 fakeTan    = normalize(cross(float3(0,1,0), flatHN));
+                float3 hairBFlat  = normalize(cross(flatHN, fakeTan));
+                float3 hairBLut   = normalize(lerp(hairBFlat, hariBin, 1.0 - ormTex.x) + HN * _BiNormalOffset_specularLut);
 
-                float3 hairViewDir = normalize(viewDir + float3(0, _ViewDirYOffset * (1 - ormTex.x), 0));
-                
-                // 相机forward dir
-                float3 cameraForward = UNITY_MATRIX_V[2].xyz;  
-                cameraForward = normalize(cameraForward);  
-                viewDir = lerp(viewDir, cameraForward, _ForwardDirStrength);  
-                viewDir = normalize(viewDir);
+                float3 halfDir    = normalize(hairVD + L);
+                float  ToH_lut    = dot(halfDir, hairBLut);
+                float  lutU       = 1.0 - ToH_lut * ToH_lut;
+                lutU = max(0.0001, sqrt(lutU));
+                lutU = _SpecularPowStrength * log2(lutU);
+                lutU = saturate(exp2(lutU) * reflec);
 
-                // 获取光源颜色
-                float3 mainLightColor = mainLight.color;
-                float mainLightIntensity = max(0.001, (0.299 * mainLightColor.r + 0.587 * mainLightColor.g + 0.114 * mainLightColor.b));// 把RGB转成亮度（灰度），防止除零
-                mainLightColor = mainLightColor / mainLightIntensity;// 用亮度归一化颜色，只保留色相，剔除明暗强度
-                float NoL = dot(normalWS, mainLightDir);
+                float2 vdProj = float2(dot(viewDir, camRight), dot(viewDir, camFwd));
+                float2 hnProj = float2(dot(HN, camRight), dot(HN, camFwd));
+                float  VoHN   = saturate(dot(vdProj, hnProj));
+                VoHN = pow(VoHN, _LutVPowStrength);
+                float  lutV   = VoHN * VoHN * step(0.0, ToH_lut);
 
-                // 头顶补光光源计算
-                float3 otherLightDir = float3(0,1,0);
-                float otherLightNoL = dot(otherLightDir, normalWS);
-                otherLightNoL = saturate(otherLightNoL + _OtherLightOffset);// 偏移+钳位，把底部黑暗区域抬起来，防止下巴、腹部死黑
-                otherLightNoL = otherLightNoL * _OtherLightStrength + _OtherLightStrength_Offset;// 缩放亮度 + 基础底光
-                float3 otherLightColor = _OtherLightColor;
-                float3 otherLightResult = otherLightColor * otherLightNoL;
+                float4 lutSpec = SAMPLE_TEXTURE2D(_HairSpecularTex, sampler_HairSpecularTex, float2(lutU, lutV));
+                float3 lutF0   = lutSpec.xyz * F0;
+                float3 backF0  = _SpecularBackF0.rgb * ormTex.w
+                    * pow(sqrt(max(0, 1.0 - ToH_lut * ToH_lut)), _SpecularPowStrength * _SpecularBackF0_ToHPowStrength);
+                float3 finalF0 = lutF0 * 7.0 + backF0;
 
-                // 计算日光强度两个临界情况的补光结果
-                float3 otherLightResult_day1 = otherLightResult * _OtherLightResultStrength_day1;
-                float3 otherLightResult_day0 = otherLightResult * _OtherLightResultStrength_day0;
-                // 主光和补光相融合 得到最终主光源
-                float3 mainLightColor_final = lerp( otherLightResult_day0, mainLightColor + otherLightResult_day1 ,_DayStrength); 
+                float  aoShaLow = lerp(aoShaNoF, minShadow, _DayStrength);
+                float  selfAo   = lerp(_SelfAoShadowStrength, 1.0, aoShaLow);
 
-                // shadow 获取
-                float shadowAttenuation = 1;
-                float2 screenUV = GetNormalizedScreenSpaceUV(i.positionHCS.xy);// 把裁剪空间坐标转为屏幕UV
-                float ssShadow = SAMPLE_TEXTURE2D(_ScreenSpaceShadowmapTexture, sampler_PointClamp, screenUV).x;// 采样URP屏幕空间阴影贴图
-                // 同时混合物体自身投影 + 场景阴影，取最小值（阴影叠加更重）
-                shadowAttenuation = mainLight.shadowAttenuation;
-                shadowAttenuation = min(mainLight.shadowAttenuation, ssShadow);
+                float3 specResult = lightFinal * selfAo * finalF0;
 
-                float shadowScene = (SigmoidSharp(shadowAttenuation, _ShadowCenter, _ShadowSmoothness) + _ShadowOffset) * _ShadowStrength ;// 卡通阶跃处理：Sigmoid做成硬阴影分界
-                shadowScene = saturate(shadowScene);
+                float  sssBlend = 1.0 - _DiffuseBlendEffect * (1.0 - mainTex.w);
+                float3 mainResult = diffResult * sssBlend + specResult;
 
-                //材质属性获取
-                float roughness = 1 - ormTex.w;// 光滑度 → 粗糙度转换
-                float roughness2 = max(roughness * roughness, 0.0078);// 粗糙度平方 + 下限保护，防止高光出现镜面奇点
-                float metallic = ormTex.r;// R通道：金属度
-                float reflectivity = ormTex.g;// G通道：反射率，控制非金属F0
-                float ao = ormTex.b;// B通道：AO闭塞值
-                ao = pow(ao, _AoStrength);// 幂次增强闭塞，加深暗部死角
+                // ── Rim ──
+                float  NoV        = saturate(dot(N, viewDir));
+                float3 rimFresnel = ZmdFresnelRim(NoV, diffLight, ao);
+                float3 rimLxz     = ZmdNoLxzRim(N, Lxz, NoV, lightCol, lightIntensity, diffLight, ao);
+                float3 rimResult  = rimFresnel + rimLxz;
 
-                //漫反射颜色三层准备
-                float3 baseColor = mainTex.xyz * _BaseColor.xyz;
-                baseColor = pow(baseColor, _BaseColorPow);
-
-                // 暗部颜色（饱和度衰减）
-                float3 baseColor_dark = baseColor * _AlbedoDarkStrength;
-                float baseColor_dark_strength = dot(baseColor_dark, float3(0.299, 0.587, 0.114));// RGB转灰度亮度
-                baseColor_dark = lerp(baseColor_dark_strength.xxx, baseColor_dark, _AlbedoDarkSaturation);// 在纯灰度黑白色与原色之间插值，控制饱和度
-
-                // 能量守恒分配
-                float energyDistribution_metallic = 0.96 - 0.96 * metallic;
-                float3 mainDiffuseColor_Light = baseColor * energyDistribution_metallic;
-                float3 mainDiffuseColor_Dark  = baseColor_dark * energyDistribution_metallic;
-                float3 mainDiffuseColor_Dark_attention = mainDiffuseColor_Dark * 0.65;
-                float3 F0 = 0.04 * reflectivity.xxx + metallic * (baseColor - reflectivity.xxx * 0.04);//F0 菲涅尔基础反射率（给高光用）
-
-                // 背光判断
-                float2 cameraForward_xz = normalize(cameraForward.xz);
-                float backLight = saturate(-dot(cameraForward_xz, mainLightDir_xz.xz));// dot结果：光源与相机朝向相反时为负值，加负号转正
-                float backLight_y = saturate(-abs(cameraForward.y) + 0.75);
-                // smoothstep手动版,三阶平滑缓动函数，等价于 smoothstep (0,1,t)。
-                backLight_y = backLight_y * backLight_y * (3.0 - 2.0 * backLight_y);//缓动过渡，避免硬切
-                backLight = backLight * backLight_y;
-
-                // 采样ramp的NoL计算
-                float rampNoL = 0.5 - 0.5 * NoL * NoL;//正面受光 NoL≈1 → rampNoL=0 侧面、背光 NoL 变小 → rampNoL 数值抬升 专门提亮背光区域，为逆光补偿预留增量。
-                float NoL_rampFinal = clamp(rampNoL * backLight + NoL, -1, 1);//只在逆光环境抬升暗部，顺光完全不破坏原有光照分布。
-                NoL_rampFinal = NoL_rampFinal * 0.5 + 0.5;
-                float4 rampColor = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, float2(NoL_rampFinal, 0.5));
-                
-                // Ramp采样UV（NoF轴，用于暗中暗边缘）
-                float NoF = dot(normalWS, cameraForward) * 0.5 + 0.5;
-                float rampColor_NoF = SAMPLE_TEXTURE2D(_RampTex, sampler_RampTex, float2(NoF, 0.5)).w;//Alpha 通道专门存轮廓边缘压暗系数
-
-                //其他项组合（ao / shadow / NoF）
-                float ao_shadow = ao * shadowScene;
-                float min_shadowEffect = min(min(ao, shadowScene), rampColor.w);//控制：亮部色 ↔ 暗部色
-                float ao_shadow_NoFRamp = ao_shadow * rampColor_NoF;//暗部 ↔ 暗中暗
-
-                //三层漫反射 Brdf + Ramp 染色
-                // Day=1 状态，三层lerp
-                float3 mainDiffuseColor_Dark_lerp = lerp(mainDiffuseColor_Dark_attention, mainDiffuseColor_Dark,saturate(ao_shadow_NoFRamp + rampColor.w));
-                float3 mainDiffuseBrdf = lerp(mainDiffuseColor_Dark_lerp, mainDiffuseColor_Light, min_shadowEffect);
-
-                // Ramp 饱和度自适应染色
-                float rampColor_max = max(max(rampColor.r, rampColor.g), rampColor.b);
-                float rampColor_min = min(min(rampColor.r, rampColor.g), rampColor.b);
-                float rampSat = rampColor_max - rampColor_min;// 算出饱和度（色度值)
-                float3 rampColor_xyzEffect = rampColor.rgb * rampSat + 1 - rampSat;// 饱和度越高，Ramp染色越强；灰白区域弱化染色
-                float3 mainDiffuseBrdf_rampColor = mainDiffuseBrdf * rampColor_xyzEffect;
-
-                // 亮度补偿防止ramp压太暗
-                float brdf_str     = dot(mainDiffuseBrdf, float3(0.299,0.587,0.114));//不带Ramp染色的原始BRDF亮度
-                float brdf_r_str   = dot(mainDiffuseBrdf_rampColor, float3(0.299,0.587,0.114));// 叠加了Ramp染色之后的整体亮度
-                float rampColor_control = clamp(brdf_str / max(0.01, brdf_r_str), 0, 1.5);//亮度比值，用来反向控制Ramp强度
-
-                // Day=0 状态，2层简单lerp
-                float3 mainDiffuseBrdf_lowLight = lerp(mainDiffuseColor_Dark_attention,  mainDiffuseColor_Light, ao_shadow_NoFRamp);
-
-                // 根据日光强度混合两个状态
-                float3 mainDiffuseBrdf_final = lerp(mainDiffuseBrdf_lowLight, mainDiffuseBrdf_rampColor * rampColor_control,  _DayStrength);
-
-                // 漫反射结果
-                float3 mainDiffuseResult = mainLightColor_final * mainDiffuseBrdf_final;
-
-                // 相机右方向
-                float3 worldUp = float3(0, 1, 0);
-                float3 cameraRight = normalize(cross(worldUp, cameraForward) + float3(1e-6, 0, 0));
-
-                // 平滑法向压平trick
-                float dotRight = dot(HNormalWS, cameraRight);
-                float3 cylinderNormal = normalize(HNormalWS - dotRight * cameraRight);
-                float3 flatHNormal = normalize(lerp(HNormalWS, cylinderNormal, _SpecularTrick_Flatten));
-
-                // 发丝切线方向（用源码的精确叉积公式，避免接近上方时退化）
-                float3 hairTempTangent = float3(0, 0, 1);
-                float3 hairTempBiTangent = HNormalWS.zxy * hairTempTangent.yzx - HNormalWS * hairTempTangent;
-                float3 hairBiTangent = lerp(hairTempBiTangent, i.tangentWS.yzx, 1-ormTex.x);
-                float3 hariBinormal = HNormalWS.yzx * hairBiTangent.zxy - HNormalWS.zxy * hairBiTangent.yzx;
-
-                // 发丝切线方向
-                float3 fakeTangent = normalize(cross(float3(0,1,0), flatHNormal));
-                float3 hairBiNormal_flatten = normalize(cross(flatHNormal, fakeTangent));
-
-                // 混合两种binormal（源码做法）
-                float3 hairBiNormal_lut = normalize(lerp(hairBiNormal_flatten, hariBinormal, 1-ormTex.x) + HNormalWS * _BiNormalOffset_specularLut);
-
-                // 半角向量
-                float3 hairHalfDir = normalize(hairViewDir + mainLightDir);
-
-                // Kajiya-Kay 高光位置
-                float ToH_lut = dot(hairHalfDir, hairBiNormal_lut);
-                float lutUV_u = 1 - ToH_lut * ToH_lut;
-                lutUV_u = max(0.0001, sqrt(lutUV_u));
-                lutUV_u = _SpecularPowStrength * log2(lutUV_u);
-                lutUV_u = saturate(exp2(lutUV_u) * reflectivity);
-
-               // LUT V轴计算（注意源码用的是viewDir不是hairViewDir）
-                float2 viewDirProj = float2(dot(viewDir, cameraRight), dot(viewDir, cameraForward));
-                float2 HNormalProj = float2(dot(HNormalWS, cameraRight), dot(HNormalWS, cameraForward));
-                float VoHN_horizontal = saturate(dot(viewDirProj, HNormalProj));
-                VoHN_horizontal = pow(VoHN_horizontal, _LutVPowStrength);
-                float directionMask = step(0.0, ToH_lut);
-                float lutUV_v = VoHN_horizontal * VoHN_horizontal * directionMask;
-
-
-                // 采样高光颜色LUT
-                float4 SpecularRefineF0Tex_var = SAMPLE_TEXTURE2D(_HairSpecularTex, sampler_HairSpecularTex, float2(lutUV_u, lutUV_v));
-
-                // F0修正
-                float3 lutF0 = SpecularRefineF0Tex_var.xyz * F0;
-
-                // 背光高光光晕
-                float3 backF0 = _SpecularBackF0.rgb * ormTex.w * pow(sqrt(max(0, 1 - ToH_lut * ToH_lut)), _SpecularPowStrength * _SpecularBackF0_ToHPowStrength);
-
-                float3 finalF0 = lutF0 * 7 + backF0;
-
-                // 日光变化下的阴影因素
-                float ao_shadow_lowLight = lerp(ao_shadow_NoFRamp, min_shadowEffect, _DayStrength);
-                float selfAoShadowEffect = lerp(_SelfAoShadowStrength, 1, ao_shadow_lowLight);
-
-                // 高光结果
-                float3 mainLightSpecularResult = mainLightColor_final * selfAoShadowEffect * finalF0;
-
-                // 漫反射+高光融合（albedo w 通道控制 SSS 区域能量）
-                float diffuseSpecularBlend = 1 - _DiffuseBlendEffect * (1 - mainTex.w);
-                float3 mainLightResult = mainDiffuseResult * diffuseSpecularBlend + mainLightSpecularResult;
-
-
-                
-                // Fresnel Rim
-                float NoV = saturate(dot(normalWS, viewDir));
-                float rimStart = _RimLightArea * -0.6 + 0.8;
-                float rimEnd   = _RimLightArea * -0.4 + 0.9;
-                float rimt = saturate(((1.0 - NoV) - rimStart) / max(rimEnd - rimStart, 1e-5));// 菲涅尔因子：1-NoV = 视线垂直边缘，越靠近模型轮廓数值越高
-                float rimArea = rimt * rimt * (3.0 - 2.0 * rimt);// SmoothStep 平滑过渡（三次埃尔米特插值，无生硬锯齿）
-                float3 rimLight = rimArea * _RimLightColor * _RimLightStrength;// 基础轮廓光颜色与强度
-                // Fresnel Rim 遮罩改为柔和版
-                float3 rimLight_effectd = rimLight * (ao * 0.5 + 0.5); // 只用AO，不用shadow
-                float3 rimLight_brdf = (mainDiffuseColor_Light - 0.25) * _RimLightDiffuseColorEffect + 0.25;// 用漫反射主色调做颜色融合，让轮廓光贴合物体固有色，不会凭空冒出冷色光
-                float3 rimLightResult = rimLight_brdf * rimLight_effectd;
-
-                // NoLxz 光源边缘光（只在主光照亮的一侧生成勾边）
-                float3 rim_mainLight = lerp(1, mainLightColor * mainLightIntensity, _DayStrength);// 阴天用纯白色轮廓，晴天跟随主光颜色
-                float NoLxz = dot(normalWS, mainLightDir_xz);// 只取XZ水平面的光照夹角，忽略上下俯仰，只控制左右明暗边界
-                float NoLxz_refine = (0.5 - (0.5 * NoLxz - 1) * NoLxz) * _DayStrength;// 二次曲线塑形：把N·L变成柔和的明暗过渡带，生成一条窄窄的亮边
-                float t = saturate(5.0 * (0.4 - NoV));
-                float NoV_mask = smoothstep(0, 1, t);// 菲涅尔遮罩：只保留物体轮廓，内部不会泛光
-                float3 rim_mainLightResult = rim_mainLight * NoLxz_refine * NoV_mask * (ao * 0.5 + 0.5) * max(0.15, mainDiffuseColor_Light) * _RimLightNoLxzStrength;
-
-                // 1. rimLightResult：背光菲涅尔轮廓（逆光勾边）
-                // 2. rim_mainLightResult：主光受光侧亮边（顺光勾边)
-                float3 rimLight_finalResult = rimLightResult + rim_mainLightResult;
-
-                float3 resultColor = mainLightResult + max(rimLight_finalResult, 0);
-
-               return float4(resultColor,1);
+                return float4(mainResult + max(rimResult, 0), 1);
             }
             ENDHLSL
         }
