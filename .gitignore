@@ -7,6 +7,11 @@
 [Ll]ogs/
 [Uu]ser[Ss]ettings/
 
+# Textures & Models (large binary assets)
+*.png
+*.fbx
+*.exr
+
 # IDE
 .vs/
 .idea/
