@@ -63,19 +63,6 @@ Shader "Custom/EyeToonShader"
             #include "ZmdToonLighting.hlsl"
             #include "ZmdToonSpecular.hlsl"
 
-            CBUFFER_START(UnityPerMaterial)
-                float _CorneaBumpStrength; float3 _SpecularTrickColor, _EyeInTrickColor;
-                float _ForwardDirStrength, _DayStrength;
-                float _OtherLightResultStrength_day1, _OtherLightResultStrength_day0;
-                float4 _OtherLightColor; float _OtherLightOffset, _OtherLightStrength, _OtherLightStrength_Offset;
-                float _ShadowCenter, _ShadowSmoothness, _ShadowOffset, _ShadowStrength;
-                float _AoStrength, _SelfAoShadowStrength;
-                float3 _BaseColor; float _BaseColorPow, _AlbedoDarkStrength, _AlbedoDarkSaturation;
-                float _SpecularStrength; float4 _SpecularColor;
-                float _RimLightArea; float3 _RimLightColor; float _RimLightStrength;
-                float _RimLightDiffuseColorEffect, _RimLightNoLxzStrength, _IsNeedOrmTex;
-            CBUFFER_END
-
             TEXTURE2D(_MainTex);         SAMPLER(sampler_MainTex);
             TEXTURE2D(_OrmTex);          SAMPLER(sampler_OrmTex);
             TEXTURE2D(_RampTex);         SAMPLER(sampler_RampTex);

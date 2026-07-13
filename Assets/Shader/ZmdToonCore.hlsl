@@ -5,6 +5,38 @@
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Lighting.hlsl"
 #include "Packages/com.unity.render-pipelines.universal/ShaderLibrary/Shadows.hlsl"
 
+// ── Unified Material Properties (all shaders share one CBUFFER) ──
+CBUFFER_START(UnityPerMaterial)
+    float _IsNeedOrmTex, _BumpScale, _IsNeedNormalMap, _ForwardDirStrength;
+    float _DayStrength, _OtherLightResultStrength_day1, _OtherLightResultStrength_day0;
+    float _ShadowCenter, _ShadowSmoothness, _ShadowOffset, _ShadowStrength;
+    float3 _BaseColor; float _BaseColorPow, _AlbedoDarkStrength, _AlbedoDarkSaturation;
+    float _OtherLightOffset, _OtherLightStrength, _OtherLightStrength_Offset;
+    float4 _OtherLightColor; float _AoStrength;
+    float _SpecularStrength, _DiffuseBlendEffect;
+    float _RimLightArea; float3 _RimLightColor; float _RimLightStrength;
+    float _RimLightDiffuseColorEffect, _RimLightNoLxzStrength;
+    // ToonBase
+    float _EnvRotation; float3 _EnvColor; float _EnvLightStrength;
+    float _IsNeedSss; float4 _SSSColor; float _SssPowStrength;
+    float _RefineF0U_lerp; float4 _SpecularRefineColor; float _SpecularRefineColorStrength;
+    // Hair
+    float4 _FaceCenter; float _SpecularTrick_Flatten, _ViewDirYOffset;
+    float _SpecularPowStrength, _LutVPowStrength;
+    float4 _SpecularBackF0; float _SpecularBackF0_ToHPowStrength;
+    float _SelfAoShadowStrength, _BiNormalOffset_specularLut;
+    float _OutlineWidth, _ZBias; float4 _OutlineColor; float _OutLineStrength, _ZMinRefine;
+    // Skin / Face
+    float _SSSArea, _Roughness, _ReflectivityStrength;
+    // Face
+    float4 _FaceForward, _FaceRight, _FaceUp;
+    float _TrickType, _TrickStrength, _RimMaskStrength;
+    float4 _MainLightColor_dark;
+    // Eye
+    float _CorneaBumpStrength; float3 _SpecularTrickColor, _EyeInTrickColor;
+    float4 _SpecularColor;
+CBUFFER_END
+
 // ── Structures ──────────────────────────────────────────
 struct Attributes
 {
@@ -50,7 +82,5 @@ float SigmoidSharp(float x, float center, float smoothness)
 
 float3 LinearToSRGB_approx(float3 c) { return pow(max(c, 0), 1.0 / 2.2); }
 float3 SRGBToLinear_approx(float3 c) { return pow(max(c, 0), 2.2); }
-
-float Luminance(float3 c) { return dot(c, float3(0.299, 0.587, 0.114)); }
 
 #endif // ZMD_TOON_CORE

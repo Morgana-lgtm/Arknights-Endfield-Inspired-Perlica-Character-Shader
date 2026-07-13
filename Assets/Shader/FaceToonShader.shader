@@ -82,23 +82,8 @@ Shader "Custom/FaceToonShader"
             #pragma multi_compile _ SCREEN_SPACE_SHADOWS
 
             #include "ZmdToonCore.hlsl"
+            #include "ZmdToonLighting.hlsl"
             #include "ZmdToonSpecular.hlsl"
-
-            CBUFFER_START(UnityPerMaterial)
-                float _BumpScale, _IsNeedNormalMap, _ForwardDirStrength;
-                float _DayStrength, _OtherLightResultStrength_day1, _OtherLightResultStrength_day0;
-                float _ShadowCenter, _ShadowSmoothness, _ShadowOffset, _ShadowStrength;
-                float3 _BaseColor; float _BaseColorPow, _AlbedoDarkStrength, _AlbedoDarkSaturation;
-                float _OtherLightOffset, _OtherLightStrength, _OtherLightStrength_Offset;
-                float4 _OtherLightColor; float _AoStrength;
-                float _SpecularStrength, _DiffuseBlendEffect;
-                float _RimLightArea; float3 _RimLightColor; float _RimLightStrength;
-                float _RimLightDiffuseColorEffect;
-                float4 _FaceForward, _FaceRight, _FaceUp, _SSSColor;
-                float _SSSArea, _Roughness, _ReflectivityStrength;
-                float _TrickType, _TrickStrength, _RimMaskStrength;
-                float4 _MainLightColor_dark; float _SelfAoShadowStrength;
-            CBUFFER_END
 
             TEXTURE2D(_MainTex);      SAMPLER(sampler_MainTex);
             TEXTURE2D(_NormalTex);    SAMPLER(sampler_NormalTex);

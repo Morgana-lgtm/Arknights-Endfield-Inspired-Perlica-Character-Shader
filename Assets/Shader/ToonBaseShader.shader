@@ -78,22 +78,6 @@ Shader "Custom/ToonBaseShader"
             #include "ZmdToonLighting.hlsl"
             #include "ZmdToonSpecular.hlsl"
 
-            // ── Material properties (ToonBase-specific + shader features) ──
-            CBUFFER_START(UnityPerMaterial)
-                float _IsNeedOrmTex, _BumpScale, _IsNeedNormalMap, _ForwardDirStrength;
-                float _DayStrength, _OtherLightResultStrength_day1, _OtherLightResultStrength_day0;
-                float _ShadowCenter, _ShadowSmoothness, _ShadowOffset, _ShadowStrength;
-                float3 _BaseColor; float _BaseColorPow, _AlbedoDarkStrength, _AlbedoDarkSaturation;
-                float _OtherLightOffset, _OtherLightStrength, _OtherLightStrength_Offset;
-                float4 _OtherLightColor; float _AoStrength;
-                float _SpecularStrength, _DiffuseBlendEffect;
-                float _EnvRotation; float3 _EnvColor; float _EnvLightStrength;
-                float _RimLightArea; float3 _RimLightColor; float _RimLightStrength;
-                float _RimLightDiffuseColorEffect, _RimLightNoLxzStrength;
-                float _IsNeedSss; float4 _SssColor; float _SssPowStrength;
-                float _RefineF0U_lerp; float4 _SpecularRefineColor; float _SpecularRefineColorStrength;
-            CBUFFER_END
-
             TEXTURE2D(_MainTex);        SAMPLER(sampler_MainTex);
             TEXTURE2D(_OrmTex);         SAMPLER(sampler_OrmTex);
             TEXTURE2D(_NormalTex);      SAMPLER(sampler_NormalTex);
