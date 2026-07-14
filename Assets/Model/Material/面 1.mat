@@ -181,8 +181,8 @@ Material:
     - _OtherLightOffset: 0
     - _OtherLightResultStrength_day0: 1
     - _OtherLightResultStrength_day1: 0.2
-    - _OtherLightStrength: 1.41
-    - _OtherLightStrength_Offset: 1
+    - _OtherLightStrength: 19.59
+    - _OtherLightStrength_Offset: 3.21
     - _OutLineStrength: 0.8
     - _OutlineWidth: 0.5
     - _Parallax: 0.02

@@ -137,7 +137,7 @@ Material:
     - _OtherLightOffset: 0
     - _OtherLightResultStrength_day0: 1
     - _OtherLightResultStrength_day1: 0.2
-    - _OtherLightStrength: 1
+    - _OtherLightStrength: 9.17
     - _OtherLightStrength_Offset: 0.1
     - _Parallax: 0.02
     - _QueueOffset: 0

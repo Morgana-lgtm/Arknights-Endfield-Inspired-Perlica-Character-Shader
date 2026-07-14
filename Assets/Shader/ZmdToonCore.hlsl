@@ -12,7 +12,7 @@ CBUFFER_START(UnityPerMaterial)
     float _ShadowCenter, _ShadowSmoothness, _ShadowOffset, _ShadowStrength;
     float3 _BaseColor; float _BaseColorPow, _AlbedoDarkStrength, _AlbedoDarkSaturation;
     float _OtherLightOffset, _OtherLightStrength, _OtherLightStrength_Offset;
-    float4 _OtherLightColor; float _AoStrength;
+    float4 _OtherLightColor; float3 _OtherLightDir; float _AoStrength;
     float _SpecularStrength, _DiffuseBlendEffect;
     float _RimLightArea; float3 _RimLightColor; float _RimLightStrength;
     float _RimLightDiffuseColorEffect, _RimLightNoLxzStrength;

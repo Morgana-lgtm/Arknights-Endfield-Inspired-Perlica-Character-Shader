@@ -19,7 +19,7 @@ void ZmdGetMainLight(Varyings i, out float3 mainLightDir, out float3 mainLightDi
 // ── Top Fill Light ──────────────────────────────────────
 float3 ZmdGetOtherLight(float3 normalWS)
 {
-    float3 otherLightDir = float3(0, 1, 0);
+    float3 otherLightDir = normalize(_OtherLightDir);
     float  otherNoL      = dot(otherLightDir, normalWS);
     otherNoL = saturate(otherNoL + _OtherLightOffset);
     otherNoL = otherNoL * _OtherLightStrength + _OtherLightStrength_Offset;
