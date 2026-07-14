@@ -3,14 +3,19 @@ using UnityEngine;
 [ExecuteAlways]
 public class FaceDirSetter : MonoBehaviour
 {
-    public Transform forwardDir;  // drag head bone here
-    public Transform rightDir;    // drag head bone here
-    public Transform upDir;       // drag head bone here
+    public Transform forwardDir;
+    public Renderer faceRenderer;
+
+    private MaterialPropertyBlock _mpb = new MaterialPropertyBlock();
 
     void Update()
     {
-        if (forwardDir) Shader.SetGlobalVector("_ZmdFF", forwardDir.forward);
-        if (rightDir)   Shader.SetGlobalVector("_ZmdFR", rightDir.right);
-        if (upDir)      Shader.SetGlobalVector("_ZmdFU", upDir.up);
+        if (forwardDir == null || faceRenderer == null) return;
+
+        faceRenderer.GetPropertyBlock(_mpb);
+        _mpb.SetVector("_ZmdFF", forwardDir.forward);
+        _mpb.SetVector("_ZmdFR", forwardDir.right);
+        _mpb.SetVector("_ZmdFU", forwardDir.up);
+        faceRenderer.SetPropertyBlock(_mpb);
     }
 }

@@ -69,7 +69,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _LutColorTex:
-        m_Texture: {fileID: 2800000, guid: efef9db65e1af49498f2c96f245e43c2, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
@@ -133,7 +133,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _TrickTex:
-        m_Texture: {fileID: 2800000, guid: 194285b35740fce4d83c43407dc9a9bf, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -195,11 +195,11 @@ Material:
     - _Mode: 0
     - _NoShadowCasting: 0
     - _OcclusionStrength: 1
-    - _OtherLightOffset: 0.18
+    - _OtherLightOffset: 0.12
     - _OtherLightResultStrength_day0: 3.23
     - _OtherLightResultStrength_day1: 4.14
-    - _OtherLightStrength: 0.84
-    - _OtherLightStrength_Offset: 0.13
+    - _OtherLightStrength: 0.33
+    - _OtherLightStrength_Offset: 0.25
     - _OutLineStrength: 1
     - _OutlineWidth: 1
     - _Parallax: 0.02
@@ -216,11 +216,11 @@ Material:
     - _Roughness: 0.51
     - _SSSArea: 0.5
     - _SelfAoShadowStrength: 1
-    - _ShadowCenter: 0.56
+    - _ShadowCenter: 0.86
     - _ShadowLum: 1.5
-    - _ShadowOffset: 0
-    - _ShadowSmoothness: 7.63
-    - _ShadowStrength: 1
+    - _ShadowOffset: 0.46
+    - _ShadowSmoothness: 1.74
+    - _ShadowStrength: 0.47
     - _Shininess: 4.963533
     - _Smoothness: 0.22278987
     - _SmoothnessTextureChannel: 0
