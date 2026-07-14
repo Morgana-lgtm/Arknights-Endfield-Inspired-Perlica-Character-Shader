@@ -6,25 +6,14 @@ public class FaceDirSetter : MonoBehaviour
     public Transform forwardDir;
     public Transform rightDir;
     public Transform upDir;
-
-    private Renderer _r;
-    private MaterialPropertyBlock _mpb = new MaterialPropertyBlock();
-
-    void Start()
-    {
-        foreach (var r in GetComponentsInChildren<Renderer>(true))
-            if (r.sharedMaterial != null && r.sharedMaterial.shader.name.Contains("FaceToon"))
-                { _r = r; break; }
-    }
+    public Material faceMaterial; // 拖入这个模型的面部材质
 
     void Update()
     {
-        if (_r == null) return;
+        if (faceMaterial == null) return;
 
-        _r.GetPropertyBlock(_mpb);
-        if (forwardDir) _mpb.SetVector("_ZmdFF", forwardDir.forward);
-        if (rightDir)   _mpb.SetVector("_ZmdFR", rightDir.right);
-        if (upDir)      _mpb.SetVector("_ZmdFU", upDir.up);
-        _r.SetPropertyBlock(_mpb);
+        if (forwardDir) faceMaterial.SetVector("_ZmdFF", forwardDir.forward);
+        if (rightDir)   faceMaterial.SetVector("_ZmdFR", rightDir.right);
+        if (upDir)      faceMaterial.SetVector("_ZmdFU", upDir.up);
     }
 }
