@@ -21,7 +21,7 @@ MonoBehaviour:
     enabled: 1
     mat: {fileID: 2100000, guid: 95e13e4758cf63646923d92e6e0ebb75, type: 2}
   FXAA:
-    enabled: 1
+    enabled: 0
     mat: {fileID: 2100000, guid: 19b522a2466ee20458f26c5090878ffb, type: 2}
 --- !u!114 &-5153333592723207058
 MonoBehaviour:

@@ -1,26 +1,16 @@
 using UnityEngine;
 
+[ExecuteAlways]
 public class FaceDirSetter : MonoBehaviour
 {
-    public Transform headBone;
-    private Renderer faceRenderer;
-    private MaterialPropertyBlock _mpb;
-
-    void Start()
-    {
-        faceRenderer = GetComponent<Renderer>();
-        _mpb = new MaterialPropertyBlock();
-    }
+    public Transform forwardDir;  // drag head bone here
+    public Transform rightDir;    // drag head bone here
+    public Transform upDir;       // drag head bone here
 
     void Update()
     {
-        if (faceRenderer == null || headBone == null) return;
-
-        // Use MaterialPropertyBlock to avoid per-frame material instance creation (breaks SRP Batcher)
-        faceRenderer.GetPropertyBlock(_mpb);
-        _mpb.SetVector("_FaceForward", headBone.forward);
-        _mpb.SetVector("_FaceRight", headBone.right);
-        _mpb.SetVector("_FaceUp", headBone.up);
-        faceRenderer.SetPropertyBlock(_mpb);
+        if (forwardDir) Shader.SetGlobalVector("_ZmdFF", forwardDir.forward);
+        if (rightDir)   Shader.SetGlobalVector("_ZmdFR", rightDir.right);
+        if (upDir)      Shader.SetGlobalVector("_ZmdFU", upDir.up);
     }
 }

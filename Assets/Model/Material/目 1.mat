@@ -109,13 +109,13 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _AoStrength: 1
-    - _BaseColorPow: 1.2
+    - _BaseColorPow: 1.58
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
     - _ClearCoatMask: 0
     - _ClearCoatSmoothness: 0
-    - _CorneaBumpStrength: 1.36
+    - _CorneaBumpStrength: 0.4
     - _Cull: 2
     - _Cutoff: 0.5
     - _DayStrength: 1
@@ -148,7 +148,7 @@ Material:
     - _RimLightDiffuseColorEffect: 0.6
     - _RimLightNoLxzStrength: 0.7
     - _RimLightStrength: 0.8
-    - _SelfAoShadowStrength: 0.57
+    - _SelfAoShadowStrength: 0.36
     - _ShadowCenter: 0.5
     - _ShadowOffset: 0
     - _ShadowSmoothness: 0.46

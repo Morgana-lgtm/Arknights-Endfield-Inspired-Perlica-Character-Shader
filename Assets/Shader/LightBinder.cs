@@ -27,7 +27,7 @@ public class LightBinder : MonoBehaviour
     private static readonly int OffsetId  = Shader.PropertyToID("_OtherLightStrength_Offset");
     private static readonly int NmlBiasId = Shader.PropertyToID("_OtherLightOffset");
 
-    void Start()
+    void Awake()
     {
         _mpb = new MaterialPropertyBlock();
 
@@ -40,7 +40,7 @@ public class LightBinder : MonoBehaviour
 
     void Update()
     {
-        if (targetRenderer == null || targetLight == null) return;
+        if (targetRenderer == null || targetLight == null || _mpb == null) return;
 
         targetRenderer.GetPropertyBlock(_mpb);
 
@@ -62,7 +62,7 @@ public class LightBinder : MonoBehaviour
     void OnDisable()
     {
         // Reset to default top-down light
-        if (targetRenderer != null)
+        if (targetRenderer != null && _mpb != null)
         {
             targetRenderer.GetPropertyBlock(_mpb);
             _mpb.SetVector(DirId, Vector3.up);

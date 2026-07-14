@@ -41,10 +41,7 @@ Shader "Custom/FaceToonShader"
         _RimLightStrength("轮廓光强度", Range(0,3)) = 0.8
         _RimLightDiffuseColorEffect("固有色融合强度", Range(0,1)) = 0.6
 
-        // Face direction (set by FaceDirSetter)
-        _FaceForward("Face Forward", Vector) = (0,0,1,0)
-        _FaceRight("Face Right", Vector) = (1,0,0,0)
-        _FaceUp("Face Up", Vector) = (0,1,0,0)
+        // face directions set via Shader.SetGlobalVector by FaceDirSetter
 
         // SDF
         _SdfTex("SDF魔法图", 2D) = "white" {}
@@ -72,7 +69,7 @@ Shader "Custom/FaceToonShader"
 
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" }
+        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalPipeline" "SRPBatcher" = "False" }
 
         Pass
         {
@@ -131,9 +128,9 @@ Shader "Custom/FaceToonShader"
 
                 // Camera face direction
                 float3 camFaceDir = normalize(float3(
-                    dot(camFwd, _FaceRight.xyz),
-                    dot(camFwd, _FaceUp.xyz),
-                    dot(camFwd, _FaceForward.xyz)));
+                    dot(camFwd, _ZmdFR.xyz),
+                    dot(camFwd, _ZmdFU.xyz),
+                    dot(camFwd, _ZmdFF.xyz)));
                 float headDot = camFaceDir.z / max(1e-5, sqrt(dot(camFaceDir.xz, camFaceDir.xz)));
 
                 // SSS
@@ -157,7 +154,7 @@ Shader "Custom/FaceToonShader"
                 float3 diffDarkIn  = diffDark * 0.65;
 
                 // ── SDF Lighting ──
-                float3 LxzFace = normalize(float3(dot(L, _FaceRight.xyz), 6.10351562e-05, dot(L, _FaceForward.xyz)));
+                float3 LxzFace = normalize(float3(dot(L, _ZmdFR.xyz), 6.10351562e-05, dot(L, _ZmdFF.xyz)));
                 float  sdfFlag = step(0, LxzFace.x);
                 float  sdfU    = sdfFlag * (2.0 * i.uv0.x - 1.0) + 1.0 - i.uv0.x;
                 float4 sdfTex  = SAMPLE_TEXTURE2D(_SdfTex, sampler_SdfTex, float2(sdfU, i.uv0.y));
@@ -238,9 +235,9 @@ Shader "Custom/FaceToonShader"
                 // ── Rim (SDF-based) ──
                 float sdfZ    = lerp(-(sdfTex.z * 2.0 - 1.0), sdfTex.z * 2.0 - 1.0, sdfFlag);
                 float3 sdfDir = normalize(float3(sdfZ, 6.10351562e-05, 1.0 - abs(sdfZ)));
-                float3 fsX = float3(_FaceRight.x, _FaceUp.x, _FaceForward.x);
-                float3 fsY = float3(_FaceRight.y, _FaceUp.y, _FaceForward.y);
-                float3 fsZ = float3(_FaceRight.z, _FaceUp.z, _FaceForward.z);
+                float3 fsX = float3(_ZmdFR.x, _ZmdFU.x, _ZmdFF.x);
+                float3 fsY = float3(_ZmdFR.y, _ZmdFU.y, _ZmdFF.y);
+                float3 fsZ = float3(_ZmdFR.z, _ZmdFU.z, _ZmdFF.z);
                 float3 sdfN= normalize(float3(dot(fsX, sdfDir), dot(fsY, sdfDir), dot(fsZ, sdfDir)));
                 float3 rimN= lerp(sdfN, i.normalWS, sdfRefine.y);
 
@@ -259,7 +256,8 @@ Shader "Custom/FaceToonShader"
                 float3 rimBRDF  = (diffLight - 0.25) * _RimLightDiffuseColorEffect + 0.25;
                 float3 rimResult= rimBRDF * rimEff * rHalf;
 
-                return float4(mainResult + max(rimResult, 0), 1);
+                float3 result = mainResult + max(rimResult, 0);
+                return half4(mainResult + max(rimResult, 0), 1);
             }
             ENDHLSL
         }

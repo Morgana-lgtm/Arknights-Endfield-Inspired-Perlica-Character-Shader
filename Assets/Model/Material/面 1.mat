@@ -136,7 +136,7 @@ Material:
     m_Floats:
     - _AddPrecomputedVelocity: 0
     - _AlbedoDarkSaturation: 0.893
-    - _AlbedoDarkStrength: 0.543
+    - _AlbedoDarkStrength: 0.92
     - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -181,8 +181,8 @@ Material:
     - _OtherLightOffset: 0
     - _OtherLightResultStrength_day0: 1
     - _OtherLightResultStrength_day1: 0.2
-    - _OtherLightStrength: 19.59
-    - _OtherLightStrength_Offset: 3.21
+    - _OtherLightStrength: 0.7
+    - _OtherLightStrength_Offset: 0.25
     - _OutLineStrength: 0.8
     - _OutlineWidth: 0.5
     - _Parallax: 0.02
@@ -224,15 +224,18 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 0}
     - _EnvColor: {r: 1, g: 1, b: 1, a: 1}
-    - _FaceForward: {r: 0, g: 0, b: 1, a: 0}
+    - _FaceForward: {r: 2.842171e-14, g: -0.00000035762787, b: 1, a: 0}
     - _FaceRight: {r: 1, g: 0, b: 0, a: 0}
     - _FaceUp: {r: 0, g: 1, b: 0, a: 0}
     - _MainLightColor_dark: {r: 1, g: 1, b: 1, a: 1}
     - _OtherLightColor: {r: 1, g: 1, b: 1, a: 1}
     - _OutlineColor: {r: 1, g: 1, b: 1, a: 1}
     - _RimLightColor: {r: 1, g: 1, b: 1, a: 1}
-    - _SSSColor: {r: 1, g: 0.8, b: 0.7, a: 1}
+    - _SSSColor: {r: 0.7830189, g: 0.46666265, b: 0.41736382, a: 1}
     - _ShadowDiffuseColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _ZmdFF: {r: 0, g: 0, b: 1, a: 0}
+    - _ZmdFR: {r: 1, g: 0, b: 0, a: 0}
+    - _ZmdFU: {r: 0, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

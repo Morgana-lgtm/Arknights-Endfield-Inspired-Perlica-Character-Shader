@@ -29,13 +29,15 @@ CBUFFER_START(UnityPerMaterial)
     // Skin / Face
     float _SSSArea, _Roughness, _ReflectivityStrength;
     // Face
-    float4 _FaceForward, _FaceRight, _FaceUp;
     float _TrickType, _TrickStrength, _RimMaskStrength;
     float4 _MainLightColor_dark;
     // Eye
     float _CorneaBumpStrength; float3 _SpecularTrickColor, _EyeInTrickColor;
     float4 _SpecularColor;
 CBUFFER_END
+
+// Face direction — set by FaceDirSetter via Shader.SetGlobalVector
+float4 _ZmdFF, _ZmdFR, _ZmdFU;
 
 // ── Structures ──────────────────────────────────────────
 struct Attributes

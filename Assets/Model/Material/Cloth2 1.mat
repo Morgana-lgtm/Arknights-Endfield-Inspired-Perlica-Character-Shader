@@ -126,7 +126,7 @@ Material:
     - _AlphaClip: 0
     - _AlphaToMask: 0
     - _AoStrength: 1
-    - _BaseColorPow: 1
+    - _BaseColorPow: 1.35
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BumpScale: 1
@@ -154,9 +154,9 @@ Material:
     - _OcclusionStrength: 1
     - _OtherLightOffset: 0
     - _OtherLightResultStrength_day0: 1
-    - _OtherLightResultStrength_day1: 0.2
+    - _OtherLightResultStrength_day1: 3
     - _OtherLightStrength: 0.3
-    - _OtherLightStrength_Offset: 2.05
+    - _OtherLightStrength_Offset: 0.19
     - _Parallax: 0.02
     - _QueueOffset: 0
     - _ReceiveShadows: 1

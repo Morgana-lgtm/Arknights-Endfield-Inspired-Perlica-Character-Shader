@@ -109,10 +109,10 @@ Material:
     m_Floats:
     - _AddPrecomputedVelocity: 0
     - _AlbedoDarkSaturation: 0.8
-    - _AlbedoDarkStrength: 0.8
+    - _AlbedoDarkStrength: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _AoStrength: 1.98
+    - _AoStrength: 0.82
     - _BaseColorPow: 1
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
@@ -142,7 +142,7 @@ Material:
     - _OtherLightOffset: 0
     - _OtherLightResultStrength_day0: 1
     - _OtherLightResultStrength_day1: 0.2
-    - _OtherLightStrength: 0.3
+    - _OtherLightStrength: 1
     - _OtherLightStrength_Offset: 2
     - _Parallax: 0.02
     - _QueueOffset: 0
