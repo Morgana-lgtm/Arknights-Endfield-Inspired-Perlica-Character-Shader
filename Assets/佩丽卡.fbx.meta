@@ -8,7 +8,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 0.men
-    second: {fileID: 2100000, guid: 8229a480754edef439f636c86cbbc4e4, type: 2}
+    second: {fileID: 2100000, guid: a0dbced85493dea4a9d94cf18fc77ade, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
@@ -38,7 +38,7 @@ ModelImporter:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
       name: 14.hyoujou
-    second: {fileID: 2100000, guid: a0dbced85493dea4a9d94cf18fc77ade, type: 2}
+    second: {fileID: 2100000, guid: 68d34f5e36286b242ab327aba5d82c18, type: 2}
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule

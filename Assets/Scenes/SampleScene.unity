@@ -196,7 +196,7 @@ PrefabInstance:
       addedObject: {fileID: 191463596}
     - targetCorrespondingSourceObject: {fileID: 1725852807578425184, guid: 7a55363a4a46364408fb2cd0e77579ca, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 1501389228}
+      addedObject: {fileID: 235316072}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 7a55363a4a46364408fb2cd0e77579ca, type: 3}
       insertIndex: -1
@@ -4769,6 +4769,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -9154776591970790395, guid: 7a55363a4a46364408fb2cd0e77579ca, type: 3}
   m_PrefabInstance: {fileID: 5642782}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &235316071
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 235316072}
+  - component: {fileID: 235316073}
+  m_Layer: 0
+  m_Name: LightBinder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &235316072
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235316071}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.003000021, y: 0.005, z: -0.118}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1347797821}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &235316073
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 235316071}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c027d7520e6b3734fb9b80b2e7200b98, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LightBinder
+  targetLight: {fileID: 490943338}
+  targetRenderer: {fileID: 1347797822}
+  intensityScale: 0.29
+  baseBrightness: 0.1
+  normalOffset: 0
 --- !u!4 &239496264 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -3118082051353353426, guid: 7a55363a4a46364408fb2cd0e77579ca, type: 3}
@@ -5442,13 +5491,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 410087039}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.5614417, y: -0.47692418, z: 0.67267275, w: 0.0695548}
+  m_LocalRotation: {x: -0.74097717, y: -0.13197961, z: -0.4676091, w: -0.4635471}
   m_LocalPosition: {x: 1.335, y: 1.758, z: -0.081}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 34.3, y: 264.07, z: -229.6}
+  m_LocalEulerAnglesHint: {x: 34.3, y: 99.26, z: -229.6}
 --- !u!114 &410087042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6860,7 +6909,7 @@ MonoBehaviour:
   forwardDir: {fileID: 1203269756}
   rightDir: {fileID: 2124368227}
   upDir: {fileID: 230063089}
-  faceMaterial: {fileID: 0}
+  faceMaterial: {fileID: 2100000, guid: a0dbced85493dea4a9d94cf18fc77ade, type: 2}
 --- !u!95 &808018305
 Animator:
   serializedVersion: 7
@@ -9087,55 +9136,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3976573842722794804, guid: 7a55363a4a46364408fb2cd0e77579ca, type: 3}
   m_PrefabInstance: {fileID: 5642782}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1501389227
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1501389228}
-  - component: {fileID: 1501389229}
-  m_Layer: 0
-  m_Name: LightBinder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1501389228
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501389227}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.003000021, y: 0.005, z: -0.118}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1347797821}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1501389229
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1501389227}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c027d7520e6b3734fb9b80b2e7200b98, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::LightBinder
-  targetLight: {fileID: 490943338}
-  targetRenderer: {fileID: 1347797822}
-  intensityScale: 0.29
-  baseBrightness: 0.1
-  normalOffset: 0
 --- !u!4 &1501621329 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -6016863146911271211, guid: 7a55363a4a46364408fb2cd0e77579ca, type: 3}

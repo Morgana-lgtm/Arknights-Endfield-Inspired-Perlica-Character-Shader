@@ -178,8 +178,8 @@ Material:
     - _OcclusionStrength: 1
     - _OtherLightOffset: 0
     - _OtherLightResultStrength_day0: 1
-    - _OtherLightResultStrength_day1: 1.64
-    - _OtherLightStrength: 0.3
+    - _OtherLightResultStrength_day1: 2.64
+    - _OtherLightStrength: 1.05
     - _OtherLightStrength_Offset: 0.1
     - _OutLineStrength: 1
     - _OutlineWidth: 1
@@ -190,8 +190,8 @@ Material:
     - _Revision: 2
     - _RimLightArea: 0
     - _RimLightDiffuseColorEffect: 1
-    - _RimLightNoLxzStrength: 0
-    - _RimLightStrength: 0.72
+    - _RimLightNoLxzStrength: 0.43
+    - _RimLightStrength: 1.8
     - _RimMaskStrength: 0.5
     - _Roughness: 0.5
     - _SSSArea: 1

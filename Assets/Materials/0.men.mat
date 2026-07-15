@@ -237,8 +237,8 @@ Material:
     - _SpecularColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecularTrickColor: {r: 1, g: 1, b: 1, a: 1}
     - _ToonTone: {r: 1, g: 0.5, b: 0.5, a: 0}
-    - _ZmdFF: {r: 0, g: 0, b: 1, a: 0}
-    - _ZmdFR: {r: 1, g: 0, b: 0, a: 0}
-    - _ZmdFU: {r: 0, g: 1, b: 0, a: 0}
+    - _ZmdFF: {r: 0.05981716, g: -0.12927756, b: 0.9898026, a: 0}
+    - _ZmdFR: {r: 0.99820054, g: 0.011912996, b: -0.05876873, a: 0}
+    - _ZmdFU: {r: -0.004194038, g: 0.9915369, b: 0.12975752, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

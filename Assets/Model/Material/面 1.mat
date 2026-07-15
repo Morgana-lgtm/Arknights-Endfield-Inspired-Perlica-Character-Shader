@@ -135,8 +135,8 @@ Material:
     m_Ints: []
     m_Floats:
     - _AddPrecomputedVelocity: 0
-    - _AlbedoDarkSaturation: 0.893
-    - _AlbedoDarkStrength: 0.92
+    - _AlbedoDarkSaturation: 0.99
+    - _AlbedoDarkStrength: 1
     - _Alpha: 1
     - _AlphaClip: 0
     - _AlphaToMask: 0
@@ -166,7 +166,7 @@ Material:
     - _FaceRim: 1
     - _FaceSDF: 1
     - _FaceSSS: 1
-    - _ForwardDirStrength: 0
+    - _ForwardDirStrength: 1
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
@@ -180,9 +180,9 @@ Material:
     - _OcclusionStrength: 1
     - _OtherLightOffset: 0
     - _OtherLightResultStrength_day0: 1
-    - _OtherLightResultStrength_day1: 0.2
-    - _OtherLightStrength: 0.7
-    - _OtherLightStrength_Offset: 0.25
+    - _OtherLightResultStrength_day1: 8
+    - _OtherLightStrength: 0.84
+    - _OtherLightStrength_Offset: 0.13
     - _OutLineStrength: 0.8
     - _OutlineWidth: 0.5
     - _Parallax: 0.02
@@ -199,10 +199,10 @@ Material:
     - _SSSArea: 1
     - _SelfAoShadowStrength: 1
     - _SelfLightIntensity: 3
-    - _ShadowCenter: 0.5
+    - _ShadowCenter: 15.8
     - _ShadowOffset: 0
     - _ShadowSmooth: 0
-    - _ShadowSmoothness: 9.8
+    - _ShadowSmoothness: 15.52
     - _ShadowStrength: 1.49
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
@@ -234,8 +234,8 @@ Material:
     - _SSSColor: {r: 0.7830189, g: 0.46666265, b: 0.41736382, a: 1}
     - _ShadowDiffuseColor: {r: 1, g: 1, b: 1, a: 1}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
-    - _ZmdFF: {r: 0, g: 0, b: 1, a: 0}
-    - _ZmdFR: {r: 1, g: 0, b: 0, a: 0}
-    - _ZmdFU: {r: 0, g: 1, b: 0, a: 0}
+    - _ZmdFF: {r: 0.05981716, g: -0.12927756, b: 0.9898026, a: 0}
+    - _ZmdFR: {r: 0.99820054, g: 0.011912996, b: -0.05876873, a: 0}
+    - _ZmdFU: {r: -0.004194038, g: 0.9915369, b: 0.12975752, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
